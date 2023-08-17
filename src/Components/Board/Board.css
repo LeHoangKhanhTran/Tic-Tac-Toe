@@ -1,0 +1,15 @@
+.board {
+  position: relative;
+  display: grid;
+  margin-top: 10px;
+  grid-template-columns: 6.4em 6.4em 6em;
+  grid-gap: 15px;
+  background-color: transparent;
+}
+
+
+@media screen and (max-width: 350px) {
+  .board {
+    grid-template-columns: 80px 80px 75px;
+  }
+}

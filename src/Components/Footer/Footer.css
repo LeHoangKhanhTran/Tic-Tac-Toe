@@ -1,0 +1,47 @@
+.footer {
+    display: flex;
+    width: 21rem;
+    gap: 15px;
+    justify-content: space-between;
+    margin-top: -15px;
+}
+
+.record {
+    width: 18em;
+    padding: 6px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(25,42,50,255);
+    text-align: center;
+}
+
+#x-win {
+    background-color: #31c4be;
+}
+
+#ties {
+    background-color: #a8bec9;
+}
+
+#o-win {
+    background-color: #f2b237;
+}
+
+.count {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 350px)  {
+    .footer {
+        width: 17rem;
+        gap: 15px;
+    }
+
+    .record {
+        width: 7.9em;
+        font-size: 0.65rem;
+    }
+}

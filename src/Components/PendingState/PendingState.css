@@ -1,0 +1,48 @@
+.pending {
+    position: relative;
+    display: flex;
+    gap: 5px;
+    color: #a9bdc5;
+    top: -40px;
+    z-index: 5;
+}
+
+img {
+    position: relative;
+    top: 5px;
+}
+
+.assertion {
+    margin-top: 40px;
+    font-size: 2.2em;
+}
+
+.mark-text {
+    position: relative;
+    top: 8px;
+}
+
+.o {
+    left: -5px;
+}
+
+@media screen and (max-width: 450px) {
+    .pending {
+        top: -35px;
+        font-size: 1.3em;
+    }
+
+    .mark-text {
+        top: 5px;
+    }
+
+    .o {
+        top: 7px;
+    }
+
+    img {
+        left: -5px;
+        transform: scale(0.6);
+    }
+}
+

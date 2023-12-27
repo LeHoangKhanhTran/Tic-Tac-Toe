@@ -11,6 +11,7 @@ export default function Game({gameMode, playerMark, switchMark}) {
   const [oWin, setO] = React.useState(0);
   const [tie, setTie] = React.useState(0);
   const [winner, setWinner] = React.useState("");
+  
   const prevWinner = useMemo(() => {
     if (winner)  return winner;
     else return "X";
@@ -102,13 +103,13 @@ export default function Game({gameMode, playerMark, switchMark}) {
     setWinner(prev => winner);
   }
 
-  function Tie()
+  function updateTie()
   {
-   setTurn(prev => prev = prevWinner);
-   const Tie = JSON.parse(localStorage.getItem(`${gameMode}-tie`));
-   localStorage.setItem(`${gameMode}-tie`, Tie + 1);
-   const newTie = JSON.parse(localStorage.getItem(`${gameMode}-tie`));
-   setTie(newTie);
+    setTurn(prev => prev = prevWinner);
+    const Tie = JSON.parse(localStorage.getItem(`${gameMode}-tie`));
+    localStorage.setItem(`${gameMode}-tie`, Tie + 1);
+    const newTie = JSON.parse(localStorage.getItem(`${gameMode}-tie`));
+    setTie(newTie);
   }
 
   function reset()
@@ -122,7 +123,7 @@ export default function Game({gameMode, playerMark, switchMark}) {
     <div className="app">
       <div className="container">
         <Header click={reset} currentTurn={turn}></Header>
-        <Board key={state} display={changeTurn} updateWin={setVictory} updateTie={Tie} reset={reset} playerMark={playerMark} mode={gameMode}
+        <Board key={state} display={changeTurn} updateWin={setVictory} updateTie={updateTie} reset={reset} playerMark={playerMark} mode={gameMode}
         currentTurn={turn} prevWinner={prevWinner} winner={winner} switchMark={switchMark}></Board>
         <Footer x={xWin} o={oWin} t={tie} playerMark={playerMark} mode={gameMode}></Footer>
       </div>

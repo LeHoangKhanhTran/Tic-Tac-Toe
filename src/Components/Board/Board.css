@@ -2,7 +2,7 @@
   position: relative;
   display: grid;
   margin-top: 10px;
-  grid-template-columns: 6.4em 6.4em 6em;
+  grid-template-columns: auto auto auto;
   grid-gap: 15px;
   background-color: transparent;
 }

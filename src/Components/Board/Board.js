@@ -57,9 +57,9 @@ export default function Board({display, updateWin, updateTie, reset, playerMark,
   }
 
   const arr = [];
-  for (let i = 0; i < 3; i++)
+  for (let i = 0; i < 6; i++)
   {
-    arr.push(Array(3));
+    arr.push(Array(5));
   }
   const [buttons, setButtons] = React.useState(arr);
   const [count, setCount] = React.useState(0);
@@ -75,11 +75,13 @@ export default function Board({display, updateWin, updateTie, reset, playerMark,
       updateTie();
     }    
   }, [buttons])
-
-  const buttonElements = buttons.map((_, r) => buttons.map((_, c) => {
-    return <Button row={r} column={c} value={buttons[r][c]} onClick={handleClick} winner={winner} winSquares={squares} disabled={currentTurn !== playerMark ? true : false}></Button>
-  })
+  const buttonElements = buttons.map((b, r) => 
+    [...b].map((_, c) => {
+      console.log('A')
+      return <Button row={r} column={c} value={buttons[r][c]} onClick={handleClick} winner={winner} winSquares={squares} disabled={currentTurn !== playerMark ? true : false}></Button>
+    })
   )
+  
   return (
     <div className="board">{buttonElements} 
      {(winner || count === buttons.length * buttons[0].length) && <WinState winner={winner} prevWinner={prevWinner} reset={reset} mode={mode} playerMark={playerMark} switchMark={switchMark}></WinState>};

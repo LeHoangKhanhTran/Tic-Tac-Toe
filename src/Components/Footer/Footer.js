@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Footer.css";
-export default function Footer({x, o, t, playerMark, mode})
+import { GameModeContext, PlayerMarkContext } from "../../App";
+export default function Footer({x, o, t})
 {
+    const mode = useContext(GameModeContext);
+    const playerMark = useContext(PlayerMarkContext);
     return (
         <div className="footer">
             <div className="record" id="x-win">

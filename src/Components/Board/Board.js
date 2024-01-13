@@ -1,12 +1,33 @@
-import React, { Component, useRef } from "react";
+import React, { Component, useContext, useRef } from "react";
 import {useEffect}   from "react";
 import Button from "../Button/Button";
 import "./Board.css";
-import WinState from '../WinState/WinState';
+import WinModal from '../WinModal/WinModal';
 import { getWinnerAndWinRow, randomAutoPlay, smartAutoPlay} from "../../helpers";
-
-export default function Board({display, updateWin, updateTie, reset, playerMark, mode, currentTurn, prevWinner, winner, switchMark})
+import { GameModeContext, PlayerMarkContext } from "../../App";
+export default function Board({display, updateWin, updateTie, reset, currentTurn, prevWinner, winner})
 {
+  const arr = [];
+  for (let i = 0; i < 3; i++)
+  {
+    arr.push(Array(3));
+  }
+  const [buttons, setButtons] = React.useState(arr);
+  const [count, setCount] = React.useState(0);
+  const [squares, setSquares] = React.useState([]);
+  const mode = useContext(GameModeContext);
+  const playerMark = useContext(PlayerMarkContext);
+  useEffect(() => {
+    if (!winner && count !== buttons.length * buttons[0].length && count > 0)
+    {
+      display(); 
+    }
+    if (count === buttons.length * buttons[0].length && winner === "")
+    { 
+      updateTie();
+    }    
+  }, [buttons])
+
   function updateWinStates(w, winRow)
   {
     setSquares(prev => winRow);
@@ -56,35 +77,17 @@ export default function Board({display, updateWin, updateTie, reset, playerMark,
     }
   }
 
-  const arr = [];
-  for (let i = 0; i < 6; i++)
-  {
-    arr.push(Array(5));
-  }
-  const [buttons, setButtons] = React.useState(arr);
-  const [count, setCount] = React.useState(0);
-  const [squares, setSquares] = React.useState([]);
-
-  useEffect(() => {
-    if (!winner && count !== buttons.length * buttons[0].length && count > 0)
-    {
-      display(); 
-    }
-    if (count === buttons.length * buttons[0].length && winner === "")
-    { 
-      updateTie();
-    }    
-  }, [buttons])
   const buttonElements = buttons.map((b, r) => 
     [...b].map((_, c) => {
-      console.log('A')
-      return <Button row={r} column={c} value={buttons[r][c]} onClick={handleClick} winner={winner} winSquares={squares} disabled={currentTurn !== playerMark ? true : false}></Button>
+      return <Button row={r} column={c} value={buttons[r][c]} onClick={handleClick} winner={winner} 
+      winSquares={squares} disabled={currentTurn !== playerMark ? true : false}></Button>
     })
   )
   
   return (
     <div className="board">{buttonElements} 
-     {(winner || count === buttons.length * buttons[0].length) && <WinState winner={winner} prevWinner={prevWinner} reset={reset} mode={mode} playerMark={playerMark} switchMark={switchMark}></WinState>};
+     {(winner || count === buttons.length * buttons[0].length) && 
+     <WinModal winner={winner} prevWinner={prevWinner} reset={reset}></WinModal>};
     </div>
   );
 }

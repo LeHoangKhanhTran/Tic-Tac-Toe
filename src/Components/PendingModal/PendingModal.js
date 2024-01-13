@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Xmark from "../../Marks/Xmark";
 import Omark from "../../Marks/Omark";
 import pending from "./pending.svg";
-import "./PendingState.css";
+import "./PendingModal.css";
 export default function PendingState({playerMark, delayDuration, cancelPending}) {
   const display = React.useRef("block");
   const [name, setName] = useState("content inactive");

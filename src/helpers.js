@@ -1,3 +1,5 @@
+/*Check for winner*/
+const number = 3;
 export function getOtherPlayerMark(mark)
 {
     if (mark === "X") return "O"
@@ -26,7 +28,7 @@ export function getEmpty(grid)
     {
       for (let col = 0; col < buttons[row].length; col++)
       {
-        if (buttons[row][col] && (buttons.length - row >= 3 || buttons[row].length - col >= 3))
+        if (buttons[row][col] && (buttons.length - row >= number || buttons[row].length - col >= number))
         {
           const winRow = getWinRowForCurrentSquare(row, col, buttons);
           if (winRow) 
@@ -59,7 +61,7 @@ export function getEmpty(grid)
     let [r, c] = [currentRow + count * route[0], currentCol + count * route[1]];
     let currentSquare = [r, c];
     const currentPlayer = buttons[currentRow][currentCol];
-    while (isValidSquareForWinCheck(currentSquare, currentPlayer, buttons) && count < 3)
+    while (isValidSquareForWinCheck(currentSquare, currentPlayer, buttons) && count < number)
     {
       squares.push([r, c]);
       count++; 
@@ -67,7 +69,7 @@ export function getEmpty(grid)
       c = currentCol + count * route[1];
       currentSquare = [r, c];
     }
-    if (count >= 3)
+    if (count >= number)
     {
       return squares;
     }
@@ -157,3 +159,41 @@ export function getEmpty(grid)
     }
     return {pos: optimalMove, score: optimalScore};
   }
+
+  /*Update records and local storage*/
+  export function getRecordName(winner, gameMode, playerMark)
+  {
+    const winnerName = getWinnerName(winner, playerMark, gameMode);
+    if (winnerName)
+    {
+      const recordName = `${gameMode}-${winnerName}-win`;
+      return recordName;
+    }
+  }
+
+  function getWinnerName(winner, playerMark, gameMode)
+  {
+    if (!winner) return null;
+    if (winner === playerMark) return "player";
+    else 
+    {
+      if (gameMode === "CPU") return gameMode;
+      else return "opponent";
+    }
+  }
+
+  export function setLocalStorage(recordName)
+  {
+    const record = JSON.parse(localStorage.getItem(recordName));
+    localStorage.setItem(recordName, record + 1);
+  }
+
+  export function getLocalStorage(firstPlayer, secondPlayer)
+  {
+    const playerOneRecord = JSON.parse(localStorage.getItem(firstPlayer));
+    const playerTwoRecord = JSON.parse(localStorage.getItem(secondPlayer));
+    return {pWin: playerOneRecord, oppWin: playerTwoRecord }
+  }
+
+  
+  

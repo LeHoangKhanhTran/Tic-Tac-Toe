@@ -1,15 +1,3 @@
-.app {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-sizing: border-box;  
-  width: 100%;
-  height: fit-content;
-  min-height: 100dvh;
-  overflow-x: hidden;
-}
-
 .container {
   display: flex;
   flex-direction: column;

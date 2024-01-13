@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Xmark from "../../Marks/Xmark";
 import Omark from "../../Marks/Omark";
 import "./Start.css";
 import { Link, useNavigate } from "react-router-dom";
-import PendingState from "../PendingState/PendingState";
+import PendingModal from "../PendingModal/PendingModal";
 export default function Start({mark, changeMark}){
-    const [name, setName] = React.useState("slider x-chosen");
+    const [name, setName] = React.useState(mark === "X" ? "slider x-chosen" : "slider o-chosen");
     const [pendingActive, setPendingActive] = useState(false);
     const [navigateTimeOut, setNavTimeOut] = useState(null);
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Start({mark, changeMark}){
             navigate("player-game");
         }, delayDuration.current))
     }
-    
+        
     function cancelPending()
     {
         clearTimeout(navigateTimeOut);
@@ -31,30 +31,27 @@ export default function Start({mark, changeMark}){
     }
 
     return (
-        <div className="app">
-            <div class="start">
-                <div class="symbols">
-                    <span><Xmark size="2.9em" color="#31c4be"></Xmark></span>
-                    <span><Omark size="2.2em" color="#f2b237"></Omark></span>
-                </div>
-                <div class="pick">
-                    <h4 class="title">PICK PLAYER 1'S MARK</h4>
-                    <div class="option-bar">
-                        <span className="mark-section" id="x-mark" onClick={() => handleClick("X")}><Xmark size="3em" color={mark === "X" ? "rgba(25,42,50,255)" : "#a9bdc5"}></Xmark></span>
-                        <span className="mark-section" id="o-mark" onClick={() => handleClick("O")}><Omark size="2.35em" color={mark === "O" ? "rgba(25,42,50,255)" : "#a9bdc5"}></Omark></span>
-                        <span className={name}></span>
-                    </div>
-                    <h5 class="notice">REMEMBER : X GOES FIRST</h5>
-                </div>
-                <div class="buttons">
-                    <Link to="/cpu-game">
-                        <button class="new-game-btn" id="cpu">NEW GAME (VS CPU)</button>
-                    </Link>
-                    <button class="new-game-btn" id="player" onClick={() => loadPlayerModeGame()}>NEW GAME (VS PLAYER)</button>
-                </div>
-                
+        <div class="start">
+            <div class="symbols">
+                <span><Xmark size="2.9em" color="#31c4be"></Xmark></span>
+                <span><Omark size="2.2em" color="#f2b237"></Omark></span>
             </div>
-            {pendingActive && <PendingState playerMark={mark} delayDuration={delayDuration.current} cancelPending={cancelPending}></PendingState>}
+            <div class="pick">
+                <h4 class="title">PICK PLAYER 1'S MARK</h4>
+                <div class="option-bar">
+                    <span className="mark-section" id="x-mark" onClick={() => handleClick("X")}><Xmark size="3em" color={mark === "X" ? "rgba(25,42,50,255)" : "#a9bdc5"}></Xmark></span>
+                    <span className="mark-section" id="o-mark" onClick={() => handleClick("O")}><Omark size="2.35em" color={mark === "O" ? "rgba(25,42,50,255)" : "#a9bdc5"}></Omark></span>
+                    <span className={name}></span>
+                </div>
+                <h5 class="notice">REMEMBER : X GOES FIRST</h5>
+            </div>
+            <div class="buttons">
+                <Link to="/cpu-game">
+                    <button class="new-game-btn" id="cpu">NEW GAME (VS CPU)</button>
+                </Link>
+                <button class="new-game-btn" id="player" onClick={() => loadPlayerModeGame()}>NEW GAME (VS PLAYER)</button>
+            </div>
+            {pendingActive && <PendingModal playerMark={mark} delayDuration={delayDuration.current} cancelPending={cancelPending}></PendingModal>}
         </div>
     )
 }

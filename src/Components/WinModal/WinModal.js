@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Xmark from '../../Marks/Xmark';
 import Omark from '../../Marks/Omark';
-import './WinState.css';
+import './WinModal.css';
 import { Link } from "react-router-dom";
-export default function WinState({winner, prevWinner, reset, mode, playerMark, switchMark}) {
+import { GameModeContext, PlayerMarkContext } from "../../App";
+export default function WinState({ winner, prevWinner, reset }) {
   const display = React.useRef("block");
   const [name, setName] = React.useState("content inactive");
-  
+  const mode = useContext(GameModeContext);
+  const playerMark = useContext(PlayerMarkContext);
   const currentWinner = winner ? winner : prevWinner;
+  
   function getWinnerName()
   {
     if (currentWinner === playerMark) return "YOU";
@@ -59,7 +62,7 @@ export default function WinState({winner, prevWinner, reset, mode, playerMark, s
           </section>
           <section className="btn-zone">
             <Link to="/">
-              <button id="quit" onClick={() => switchMark("X")}>QUIT</button>
+              <button id="quit">QUIT</button>
             </Link>
             <button id="next-round" onClick={reset}>NEXT ROUND</button>
           </section>
